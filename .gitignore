@@ -1,0 +1,10 @@
+.DS_Store
+*.txt
+.vscode/
+.metadata/
+*.map
+*.d
+*.bin
+*.elf
+Debug/
+Release/
