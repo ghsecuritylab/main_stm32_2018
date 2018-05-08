@@ -34,6 +34,7 @@ extern volatile uint8_t udp_updated;
 extern volatile scramble_udp_msg udp_msg;
 
 void scramble_init();
+void scramble_main();
 
 int get_rotary_switch();
 void set_dribble(uint32_t power);

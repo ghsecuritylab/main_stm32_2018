@@ -97,9 +97,9 @@ static void udpecho_raw_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,  co
 		for(int i=1; i<SIZE_UDP_MSG-2; i++){
 			parity ^= ((char *)p->payload)[i];
 		}
-		if( parity == ((char *)p->payload)[SIZE_UDP_MSG-2] && ((char *)p->payload)[SIZE_UDP_MSG-2] ^ 0xff == ((char *)p->payload)[SIZE_UDP_MSG-1]){
+		if( parity == ((char *)p->payload)[SIZE_UDP_MSG-2] && (((char *)p->payload)[SIZE_UDP_MSG-2] ^ 0xff) == ((char *)p->payload)[SIZE_UDP_MSG-1]){
 			__disable_irq();
-			memcpy(&udp_msg, p->payload, SIZE_UDP_MSG);
+			memcpy((void *) &udp_msg, p->payload, SIZE_UDP_MSG);
 			udp_updated = 1;
 			__enable_irq();
 			//printf("%6d %6d %6d\r\n", (int)(udp_msg.vx*1000), (int)(udp_msg.vy*1000), (int)(udp_msg.omega*1000));

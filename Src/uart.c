@@ -10,36 +10,33 @@
 #include "uart.h"
 #include "cmsis_os.h"
 
-/*
- * The STM32 makes receiving chars into a large circular buffer simple
- * and requires no CPU time. The UART receiver DMA must be setup as CIRCULAR.
- */
+/* The UART receiver DMA must be setup as CIRCULAR. */
 
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
 
-static volatile UART_Buffer xbee_tx_buf;
-static volatile uint8_t xbee_rx_buf[UART_BUFFER_SIZE] __attribute__ ((aligned (8)));
-static volatile UART_HandleTypeDef *huart_xbee;
-static volatile uint32_t xbee_rx_index;
+static UART_Buffer xbee_tx_buf;
+static uint8_t xbee_rx_buf[UART_BUFFER_SIZE] __attribute__ ((aligned (8)));
+static UART_HandleTypeDef *huart_xbee;
+static uint32_t xbee_rx_index;
 
 
-static volatile UART_Buffer rs485_tx_buf;
-static volatile uint8_t rs485_rx_buf[UART_BUFFER_SIZE] __attribute__ ((aligned (8)));
-static volatile UART_HandleTypeDef *huart_rs485;
-static volatile uint32_t rs485_rx_index;
+static UART_Buffer rs485_tx_buf;
+static uint8_t rs485_rx_buf[UART_BUFFER_SIZE] __attribute__ ((aligned (8)));
+static UART_HandleTypeDef *huart_rs485;
+static uint32_t rs485_rx_index;
 
 #define DMA_WRITE_PTR(hu) ( (UART_BUFFER_SIZE - hu->hdmarx->Instance->NDTR) & (UART_BUFFER_SIZE - 1) )
 
 void UART_Init() {
 	huart_xbee = &huart3;
-	HAL_UART_Receive_DMA(huart_xbee, xbee_rx_buf, UART_BUFFER_SIZE);
+	HAL_UART_Receive_DMA(huart_xbee, (uint8_t *)xbee_rx_buf, UART_BUFFER_SIZE);
 	xbee_rx_index = 0;
 	xbee_tx_buf.head = 0;
 	xbee_tx_buf.tail = 0;
 
 	huart_rs485 = &huart2;
-	HAL_UART_Receive_DMA(huart_rs485, rs485_rx_buf, UART_BUFFER_SIZE);
+	HAL_UART_Receive_DMA(huart_rs485, (uint8_t *)rs485_rx_buf, UART_BUFFER_SIZE);
 	rs485_rx_index = 0;
 	rs485_tx_buf.head = 0;
 	rs485_tx_buf.tail = 0;

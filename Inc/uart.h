@@ -15,9 +15,9 @@
 
 typedef struct
 {
-    uint16_t head;
-    uint16_t tail;
-    uint16_t pending_size;
+    volatile uint16_t head;
+    volatile uint16_t tail;
+    volatile uint16_t pending_size;
     uint8_t data[UART_BUFFER_SIZE] __attribute__ ((aligned (8)));
 } UART_Buffer;
 
