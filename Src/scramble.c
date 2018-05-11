@@ -60,20 +60,11 @@ void scramble_main(){
 		__enable_irq();
 
 		if(flag){
-			/*
 			const float w[4][3] = {
-					{-0.5, 0.86603,     WHEEL_DISTANCE},
-					{-0.70711,-0.70711, WHEEL_DISTANCE},
-					{ 0.70711,-0.70711, WHEEL_DISTANCE},
-					{ 0.5, 0.86603,     WHEEL_DISTANCE}
-			};
-			 */
-
-			const float w[4][3] = {
-					{-0.5, 0.6,     WHEEL_DISTANCE},
-					{-0.70711,-0.70711, WHEEL_DISTANCE},
-					{ 0.70711,-0.70711, WHEEL_DISTANCE},
-					{ 0.5, 0.6,     WHEEL_DISTANCE}
+					{-1.1547, 2,     WHEEL_DISTANCE},
+					{-1.4142,-1.4142, WHEEL_DISTANCE},
+					{ 1.4142,-1.4142, WHEEL_DISTANCE},
+					{ 1.1547, 2,     WHEEL_DISTANCE}
 			};
 
 			const float v[3] = {tmp_msg.vx, tmp_msg.vy, tmp_msg.omega};
